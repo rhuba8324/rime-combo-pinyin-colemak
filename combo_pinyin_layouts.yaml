@@ -95,8 +95,8 @@ info: |
     ------------------------------------------
     指法  左4 左3 左2 左2 右2 右2 右3 右4 右5
     ------------------------------------------
-    上排        l   d      ai  ei  u   o   er
-    中排    s   c   z*  g -ng  -n* i   a
+    上排        l   d      ai  ei  u   o
+    中排    s   c   z*  g -ng  -n* i   a   er
     下排        f   b      ao  ou  ü   e
     拇指                h*
     ------------------------------------------
@@ -191,15 +191,16 @@ info: |
 gia_layout_options:
   # 字母表，包含用於並擊的按鍵
   # 擊鍵雖有先後，形成並擊時，一律以字母表順序排列
-  alphabet: 'aqzswxdecfrvgtbhynjum ki,lo.p'
+  alphabet: 'aqzrwxsfctpvdgbhjknlm eu,iy.o;'
   # 拼寫運算規則，將一組並擊編碼轉換爲拼音音節
   algebra:
     # 先將物理按鍵字符對應到宮保拼音鍵位中的拼音字母
-    - 'xlit|aqzswxdecfrvgtbhynjum ki,lo.p|XXXsczhlfgdbktpRRRiuVaNIUeoEW|'
+    - 'xlit|aqzrwxsfctpvdgbhjknlm eu,iy.o;|XXXsczhlfgdbktpRRRiuVaNIUeoEXW|'
     # 以下根據宮保拼音的鍵位分別變換聲母、韻母部分
     # 單擊時發送標點符號
     - xform/^U$/,/
     - xform/^E$/./
+    - xform/^W$/;/
     # 空格鍵單擊時產生空白
     - 'xform/^a$/ /'
     # 特例：以組合鍵[ae]輸入拼音⟨a⟩
@@ -209,7 +210,7 @@ gia_layout_options:
     # 3x10鍵盤缺少拇指鍵，可用 N 鍵代替空格鍵並擊⟨a⟩
     - xform/^Re$/a/
     - xform/R([iuV]?)a?/$1a/
-    # 若不能使用 , . 並擊，可用 P 鍵代替 -u 形成並擊組合 o-u, i+o-u, i-u
+    # 若不能使用 , . 並擊，可用 ; 鍵代替 -u 形成並擊組合 o-u, i+o-u, i-u
     - xform/Io?W/iU/
     - xform/o?W/U/
     # 消除無效按鍵
@@ -224,7 +225,7 @@ gia_layout_options:
 zhia_layout_options:
   # 字母表，包含用於並擊的按鍵
   # 擊鍵雖有先後，形成並擊時，一律以字母表順序排列
-  alphabet: 'gtbfrvdecswxaqzhynjum ki,lo.p'
+  alphabet: 'dgbtpvsfcrwxaqzhjknlm eu,iy.o;''\`'
   # 拼寫運算規則，將一組並擊編碼轉換爲拼音音節
   algebra:
     # 若 Control/Alt/Shift 鍵參與並擊，須改以單個字符表示按鍵
@@ -232,7 +233,7 @@ zhia_layout_options:
     - 'xform/\{Alt_L\}/:/'
     - 'xform/\{Shift_L\}/+/'
     # 將物理按鍵字符對應到宮保拼音鍵位中的拼音字母
-    - 'xlit|gtbfrvdecswxaqzhynjum ki,lo.p;''|gtpzdbclfsczHXXRRRiuVaNIUeoEXSQ|'
+    - 'xlit|dgbtpvsfcrwxaqzhjknlm eu,iy.o;''\`|gtpzdbclfsczHXXRRRiuVaNIUeoEXSQBG|'
     # 以下根據宮保拼音的鍵位分別變換聲母、韻母部分
     # 單擊時發送標點符號
     - xform|^U$|,|
@@ -240,18 +241,30 @@ zhia_layout_options:
     # 與Shift鍵組合時發送標點符號
     - xform|^[+]U$|<|
     - xform|^[+]E$|>|
-    # 可選：單擊時發送標點符號
+    # 可選：重音符單擊時發送標點符號
+    #- xform|^G$|`|
+    # 重音符較少用，改爲通過組合輸出（僅當分號鍵用作 h 鍵時）
+    - 'xform/^[HX]G$|^G[XR]$/`/'
+    # 左手拇指鍵 h 爲重音符，表記爲 h
+    - xlit|G|h|
+    # 可選：分號單擊時發送標點符號
     #- xform|^S$|;|
     # 分號較少用，改爲通過組合輸出（僅當分號鍵用作 h 鍵時）
     - 'xform/^[HX]S$|^S[XR]$/;/'
     # 左手拇指鍵 h 爲分號鍵，表記爲 h
     - xlit|S|h|
-    # 可選：單擊時發送標點符號
+    # 可選：單引號單擊時發送標點符號
     #- "xform|^Q$|'|"
     # 單引號較少用，改爲通過組合輸出（僅當單引號鍵用作 h 鍵時）
     - 'xform/^[HX]Q$|^Q[XR]$/''/'
     # 左手拇指鍵 h 爲單引號鍵，表記爲 h
     - xlit|Q|h|
+    # 可選：反斜線單擊時發送標點符號
+    #- xform|^B$|\|
+    # 反斜線較少用，改爲通過組合輸出（僅當分號鍵用作 h 鍵時）
+    - 'xform/^[HX]B$|^B[XR]$/\/'
+    # 左手拇指鍵 h 爲反斜線，表記爲 h
+    - xlit|B|h|
     # 左手拇指鍵 h 爲修飾鍵之一，統一表記爲 h
     - 'xlit|:+|hh|'
     # 可選：左手拇指鍵 h 在組合中作⟨h⟩、單擊作空格鍵，方便雙手交替上字
@@ -366,11 +379,11 @@ common_options:
 zhn_layout_options:
   # 字母表，包含用於並擊的按鍵
   # 擊鍵雖有先後，形成並擊時，一律以字母表順序排列
-  alphabet: 'swxdecfrvgtb ki,lo.hjyunmp'
+  alphabet: 'rwxsfctpvdgb eu,iy.hnjlkmo'
   # 拼寫運算規則，將一組並擊編碼轉換爲拼音音節
   algebra:
     # 先將物理按鍵字符對應到宮保拼音鍵位中的拼音字母
-    - 'xlit|sdecfrvgtb ki,lo.hjyunmp|sclfzdbgtphiuVaoeQNJYXWR|'
+    - 'xlit|rsfctpvdgb eu,iy.hnjlkmo|sclfzdbgtphiuVaoeQNJYXWR|'
     # 空格鍵單擊時產生空白
     - 'xform/^h$/ /'
     # 以下根據宮保拼音的鍵位分別變換聲母、韻母部分
@@ -437,11 +450,11 @@ zhn_punct_override:
 gywa_layout_options:
   # 字母表，包含用於並擊的按鍵
   # 擊鍵雖有先後，形成並擊時，一律以字母表順序排列
-  #alphabet: 'aqzswxdecfrvgtb ''hynjumkilo;p'
+  alphabet: 'aqzrwxsfctpvdgb ''hjknlmeuiyo;'
   # 拼寫運算規則，將一組並擊編碼轉換爲拼音音節
   algebra/+:
     # 先將物理按鍵字符對應到宮保拼音鍵位中的拼音字母。y, w 鍵另行定義
-    - 'xlit|aqzswxdecfrvgtbhynjumkilo;p|xqjsczhlfgdbktpRAAauuNIeoUX|'
+    - 'xlit|aqzrwxsfctpvdgbhjknlmeuiyo;|xqjsczhlfgdbktpRAAauuNIeoXU|'
     # 以下根據宮保拼音的鍵位分別變換聲母、韻母部分
     # 單擊時發送標點符號
     - xform/^U$/;/
@@ -545,7 +558,7 @@ use_zhn_layout:
 
 use_gywa_layout:
   chord_composer/+:
-    alphabet: 'aqzswxdecfrvgtb ''hynjumkilo;p'
+    alphabet: 'aqzrwxsfctpvdgb ''hjknlmeuiyo'
     algebra:
       - 'xform/ /Y/'
       - 'xform/^Y$/ /'
@@ -558,7 +571,7 @@ use_gywa_layout:
 # I have more fingers than you!
 use_gywa_emacsen_layout:
   chord_composer/+:
-    alphabet: 'aqzswxdecfrvgtb{Control_L} hynjumkilo;p'
+    alphabet: 'aqzrwxsfctpvdgb{Control_L} hjknlmeuiyo;'
     use_control: true
     algebra:
       - 'xform/\{Control_L\}/Y/'
@@ -572,7 +585,7 @@ use_gywa_emacsen_layout:
 
 use_gya_layout:
   chord_composer/+:
-    alphabet: 'aqzswxdecfrvgtb hynjumkilo;p'
+    alphabet: 'aqzrwxsfctpvdgb hjknlmeuiyo;'
     algebra:
       - 'xform/ /Y/'
       - 'xform/^Y$/ /'
@@ -580,27 +593,40 @@ use_gya_layout:
       - gywa_layout_options
       - common_options
 
+use_grave:
+  chord_composer/+:
+    alphabet: 'dgbtpvsfcrwxaqz`hjknlm eu,iy.o'
+
 use_semicolon:
   chord_composer/+:
-    alphabet: 'gtbfrvdecswxaqz;hynjum ki,lo.p'
+    alphabet: 'dgbtpvsfcrwxaqz;hjknlm eu,iy.o'
 
 use_apostrophe:
   chord_composer/+:
-    alphabet: 'gtbfrvdecswxaqz''hynjum ki,lo.p'
+    alphabet: 'dgbtpvsfcrwxaqz''hjknlm eu,iy.o'
+
+use_backslash:
+  chord_composer/+:
+    alphabet: 'dgbtpvsfcrwxaqz\hjknlm eu,iy.o'
+  punctuator/+:
+    full_shape:
+    '\' : '\'
+    half_shape:
+    '\' : '\'
 
 use_control:
   chord_composer/+:
-    alphabet: 'gtbfrvdecswxaqz{Control_L}hynjum ki,lo.p'
+    alphabet: 'dgbtpvsfcrwxaqz{Control_L}hjknlm eu,iy.o'
     use_control: true
 
 use_alt:
   chord_composer/+:
-    alphabet: 'gtbfrvdecswxaqz{Alt_L}hynjum ki,lo.p'
+    alphabet: 'dgbtpvsfcrwxaqz{Alt_L}hjknlm eu,iy.o'
     use_alt: true
 
 use_shift:
   chord_composer/+:
-    alphabet: 'gtbfrvdecswxaqz{Shift_L}hynjum ki,lo.p'
+    alphabet: 'dgbtpvsfcrwxaqz{Shift_L}hjknlm eu,iy.o'
     use_shift: true
   # 若左 Shift 鍵用於並擊則禁止其切換中西文
   ascii_composer:
