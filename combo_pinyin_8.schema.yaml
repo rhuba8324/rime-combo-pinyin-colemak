@@ -19,12 +19,20 @@ __patch:
   # 標準鍵盤用左手小指A鍵當作 h 鍵。
   # 拆分空格鍵盤須設拇指左鍵爲字母A。
   # 或者解封下列註釋行之一，選定拆分空格鍵盤的左手拇指 h 鍵：
+  # 拇指左鍵設爲重音符
+  # - combo_pinyin_layouts:/use_grave
   # 拇指左鍵設爲分號
   # - combo_pinyin_layouts:/use_semicolon
   # 拇指左鍵設爲單引號
   # - combo_pinyin_layouts:/use_apostrophe
+  # 拇指左鍵設爲反斜線
+  # - combo_pinyin_layouts:/use_backslash
   # 拇指左鍵設爲Control
   # - combo_pinyin_layouts:/use_control
+  # 拇指左鍵設爲Alt
+  # - combo_pinyin_layouts:/use_alt
+  # 拇指左鍵設爲Shift
+  # - combo_pinyin_layouts:/use_shift
   # 拇指左鍵設爲Alt
   # - combo_pinyin_layouts:/use_alt
   # 拇指左鍵設爲Shift
