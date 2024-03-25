@@ -608,11 +608,6 @@ use_apostrophe:
 use_backslash:
   chord_composer/+:
     alphabet: 'dgbtpvsfcrwxaqz\hjknlm eu,iy.o'
-  punctuator/+:
-    full_shape:
-    '\' : '\'
-    half_shape:
-    '\' : '\'
 
 use_control:
   chord_composer/+:
